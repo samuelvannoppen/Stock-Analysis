@@ -30,6 +30,7 @@ Sub DQAnalysis()
     Dim startingPrice As Double
     Dim endingPrice As Double
     
+    'establish the number of rows to loop over
      rowStart = 2
     'DELETED rowEnd = 3013
     'rowEnd code taken from https://stackoverflow.com/questions/18088729/row-count-where-data-exists
@@ -48,7 +49,7 @@ Sub DQAnalysis()
         End If
         
         'starting price
-        If Cells(i, 1).Value = "DQ" And Cells(i, -1, 1).Value <> "DQ" Then
+        If Cells(i - 1, 1).Value <> "DQ" And Cells(i, 1).Value = "DQ" Then
             
             'set starting price
             startingPrice = Cells(i, 6).Value
@@ -56,7 +57,7 @@ Sub DQAnalysis()
         End If
         
         'ending price
-        If Cells(i, 1).Value = "DQ" And Cells(i, -1, 1).Value <> "DQ" Then
+        If Cells(i + 1, 1).Value <> "DQ" And Cells(i, 1).Value = "DQ" Then
             
             'set ending price
             endingPrice = Cells(i, 6).Value
@@ -72,5 +73,6 @@ Sub DQAnalysis()
     Worksheets("DQ Analysis").Activate
     Cells(4, 1).Value = 2018
     Cells(4, 2).Value = totalVolume
+    Cells(4, 3).Value = (endingPrice / startingPrice) - 1
 
 End Sub
